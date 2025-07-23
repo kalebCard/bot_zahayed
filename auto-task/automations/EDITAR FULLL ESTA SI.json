@@ -1,0 +1,207 @@
+{
+  "name": "EDITAR FULLL ESTA SI",
+  "description": "",
+  "tags": [],
+  "created_date": "2025-07-14T12:32:15.306502",
+  "modified_date": "2025-07-14T12:32:15.306511",
+  "event_count": 26,
+  "duration": 28.377753257751465,
+  "events": [
+    {
+      "type": "mouse_click",
+      "x": 1393,
+      "y": 784,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 1.3193318843841553
+    },
+    {
+      "type": "mouse_click",
+      "x": 1393,
+      "y": 784,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 1.3913874626159668
+    },
+    {
+      "type": "mouse_click",
+      "x": 1393,
+      "y": 784,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 1.4634156227111816
+    },
+    {
+      "type": "mouse_click",
+      "x": 1393,
+      "y": 784,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 1.5514450073242188
+    },
+    {
+      "type": "mouse_click",
+      "x": 379,
+      "y": 115,
+      "button": "Button.right",
+      "pressed": true,
+      "time": 4.327650785446167
+    },
+    {
+      "type": "mouse_click",
+      "x": 379,
+      "y": 115,
+      "button": "Button.right",
+      "pressed": false,
+      "time": 4.503694295883179
+    },
+    {
+      "type": "mouse_click",
+      "x": 424,
+      "y": 158,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 5.623702049255371
+    },
+    {
+      "type": "mouse_click",
+      "x": 424,
+      "y": 158,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 5.711719036102295
+    },
+    {
+      "type": "mouse_click",
+      "x": 456,
+      "y": 885,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 8.551976919174194
+    },
+    {
+      "type": "mouse_click",
+      "x": 456,
+      "y": 885,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 8.648041248321533
+    },
+    {
+      "type": "mouse_click",
+      "x": 908,
+      "y": 91,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 10.200129508972168
+    },
+    {
+      "type": "mouse_click",
+      "x": 908,
+      "y": 91,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 10.336180210113525
+    },
+    {
+      "type": "mouse_click",
+      "x": 1376,
+      "y": 217,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 13.024408340454102
+    },
+    {
+      "type": "mouse_click",
+      "x": 1376,
+      "y": 217,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 13.16844129562378
+    },
+    {
+      "type": "key_press",
+      "key": "Key.backspace",
+      "time": 16.643761157989502
+    },
+    {
+      "type": "key_release",
+      "key": "Key.backspace",
+      "time": 16.803768396377563
+    },
+    {
+      "type": "key_press",
+      "key": "'5'",
+      "time": 17.31584405899048
+    },
+    {
+      "type": "key_release",
+      "key": "'5'",
+      "time": 17.427799940109253
+    },
+    {
+      "type": "mouse_click",
+      "x": 839,
+      "y": 47,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 20.713099718093872
+    },
+    {
+      "type": "mouse_click",
+      "x": 839,
+      "y": 47,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 20.873108625411987
+    },
+    {
+      "type": "mouse_click",
+      "x": 1571,
+      "y": 11,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 23.161304235458374
+    },
+    {
+      "type": "mouse_click",
+      "x": 1571,
+      "y": 11,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 23.27326464653015
+    },
+    {
+      "type": "mouse_click",
+      "x": 1571,
+      "y": 11,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 25.801533699035645
+    },
+    {
+      "type": "mouse_click",
+      "x": 1571,
+      "y": 11,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 25.913535594940186
+    },
+    {
+      "type": "mouse_click",
+      "x": 551,
+      "y": 310,
+      "button": "Button.left",
+      "pressed": true,
+      "time": 28.28165864944458
+    },
+    {
+      "type": "mouse_click",
+      "x": 551,
+      "y": 310,
+      "button": "Button.left",
+      "pressed": false,
+      "time": 28.377753257751465
+    }
+  ]
+}

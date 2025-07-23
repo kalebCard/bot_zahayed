@@ -1,0 +1,18 @@
+# Auto-Task - Dependencias
+# ========================
+
+# Librería principal para control de teclado y mouse
+pynput>=1.7.6
+
+# Interfaz gráfica (incluida en Python estándar)
+# tkinter - No necesita instalación, viene con Python
+
+# Procesamiento de datos
+numpy>=1.21.0
+
+# Utilidades adicionales (opcionales)
+# keyboard>=0.13.5  # Alternativa a pynput para teclado
+# mouse>=0.7.1       # Alternativa a pynput para mouse 
+
+# Dependencias de testing
+pytest>=7.0.0 
