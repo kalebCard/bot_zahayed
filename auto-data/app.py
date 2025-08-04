@@ -57,8 +57,7 @@ class TkinterApp:
         
         ttk.Button(button_frame, text="Guardar Datos", 
                   command=self.guardar_datos).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(button_frame, text="Pegar Datos", 
-                  command=self.pegar_datos).pack(side=tk.LEFT, padx=(0, 10))
+        # ...existing code...
         ttk.Button(button_frame, text="Limpiar Formulario", 
                   command=self.limpiar_formulario).pack(side=tk.LEFT)
         
@@ -105,16 +104,8 @@ class TkinterApp:
         
         ttk.Button(table_button_frame, text="Editar Seleccionado", 
                   command=self.editar_dato).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(table_button_frame, text="Copiar Seleccionado", 
-                  command=self.copiar_dato_seleccionado).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(table_button_frame, text="Copiar Múltiples", 
-                  command=self.copiar_datos_multiples).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(table_button_frame, text="Pegar Datos", 
-                  command=self.pegar_datos).pack(side=tk.LEFT, padx=(0, 10))
         ttk.Button(table_button_frame, text="Eliminar Seleccionado", 
                   command=self.eliminar_dato).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(table_button_frame, text="Actualizar Tabla", 
-                  command=self.cargar_datos).pack(side=tk.LEFT, padx=(0, 10))
         
         # Botón para eliminar el primer dato
         ttk.Button(table_button_frame, text="⏮️ Borrar Primero", 
@@ -139,18 +130,7 @@ class TkinterApp:
         style = ttk.Style()
         style.configure("Danger.TButton", font=("Arial", 10, "bold"), padding=8)
         
-        # Configurar atajos de teclado
-        self.root.bind('<Control-c>', lambda e: self.copiar_dato_seleccionado())
-        self.root.bind('<Control-v>', lambda e: self.pegar_datos())
-        self.root.bind('<Control-Shift-c>', lambda e: self.copiar_datos_multiples())
-        
-        # También configurar para el frame principal
-        self.root.bind_all('<Control-v>', lambda e: self.pegar_datos())
-        self.root.bind_all('<Control-c>', lambda e: self.copiar_dato_seleccionado())
-        
-        # Configurar eventos de teclado específicos para los widgets de texto
-        self.nombres_text.bind('<Control-v>', lambda e: self.pegar_en_texto(e))
-        self.direcciones_text.bind('<Control-v>', lambda e: self.pegar_en_texto(e))
+        # ...existing code...
     
     def guardar_datos(self):
         """Guardar datos desde el formulario"""
