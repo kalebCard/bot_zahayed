@@ -18,7 +18,6 @@ class DatabaseManager:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS datos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                fecha TEXT NOT NULL,
                 codigo TEXT NOT NULL,
                 nombre TEXT NOT NULL,
                 drireccion TEXT NOT NULL,
@@ -113,11 +112,10 @@ class DatabaseManager:
             ''', (dato.codigo, dato.nombre, dato.drireccion, dato.zip4, 
                   dato.amount_current_any, dato.amount_current_regular, dato.amount_pas_any, dato.amount_pas_regular))
             
-            # Insertar en direcciones si es necesario y marcar como usada
+            # Insertar en direcciones si es necesario
             if dato.drireccion and dato.zip4:
-                cursor.execute('INSERT OR IGNORE INTO direcciones (direccion, zip4, usada) VALUES (?, ?, 0)', 
+                cursor.execute('INSERT OR IGNORE INTO direcciones (direccion, zip4) VALUES (?, ?)', 
                              (dato.drireccion, dato.zip4))
-                cursor.execute('UPDATE direcciones SET usada=1 WHERE direccion=?', (dato.drireccion,))
             
             conn.commit()
             id_insertado = cursor.lastrowid
@@ -218,11 +216,15 @@ class DatabaseManager:
             raise e
     
     def obtener_direcciones_limpias(self) -> List[Dict[str, str]]:
-        """Obtener todas las direcciones disponibles (no usadas nunca)"""
+        """Obtener todas las direcciones que no están siendo usadas actualmente"""
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
-            cursor.execute('SELECT direccion, zip4 FROM direcciones WHERE usada=0')
+            cursor.execute('''
+                SELECT d.direccion, d.zip4 
+                FROM direcciones d 
+                WHERE d.direccion NOT IN (SELECT drireccion FROM datos)
+            ''')
             filas = cursor.fetchall()
             conn.close()
             # zip4 nunca será None, si lo es, se pone ""

@@ -187,8 +187,6 @@ class TkinterApp:
     
     def limpiar_formulario(self):
         """Limpiar el formulario"""
-        self.fecha_entry.delete(0, tk.END)
-        self.fecha_entry.insert(0, datetime.now().strftime("%B %d, %Y"))
         self.nombres_text.delete("1.0", tk.END)
         self.dato_seleccionado = None
     
@@ -210,7 +208,7 @@ class TkinterApp:
                     except Exception:
                         return val
                 self.tree.insert('', 'end', values=(
-                    dato.id, dato.fecha, dato.codigo, dato.nombre, dato.drireccion,
+                    dato.id, dato.codigo, dato.nombre, dato.drireccion,
                     dato.zip4, fmt(dato.amount_current_any), dato.amount_current_regular,
                     fmt(dato.amount_pas_any), dato.amount_pas_regular
                 ))
@@ -261,11 +259,8 @@ class TkinterApp:
                 # Dividir por tabulaciones si es una línea con datos
                 if '\t' in datos_pegados:
                     valores = datos_pegados.strip().split('\t')
-                    if len(valores) >= 4:  # Mínimo ID, fecha, código, nombre
-                        # Intentar insertar en el formulario
-                        if len(valores) > 1:
-                            self.fecha_entry.delete(0, tk.END)
-                            self.fecha_entry.insert(0, valores[1] if len(valores) > 1 else "")
+                    if len(valores) >= 4:  # Mínimo ID, código, nombre
+                        # Intentar insertar en el formularioes[1] if len(valores) > 1 else "")
                         
                         if len(valores) > 3:
                             self.nombres_text.delete("1.0", tk.END)
@@ -393,12 +388,6 @@ class TkinterApp:
         id_entry.configure(state='readonly')
         ttk.Button(frame, text="Copiar", command=lambda: self.copiar_campo_directo(id_entry, edit_window)).grid(row=0, column=2, padx=2)
 
-        ttk.Label(frame, text="Fecha:").grid(row=1, column=0, sticky=tk.W, pady=2)
-        fecha_entry = ttk.Entry(frame)
-        fecha_entry.grid(row=1, column=1, sticky="we", pady=2)
-        fecha_entry.insert(0, values[1])
-        ttk.Button(frame, text="Copiar", command=lambda: self.copiar_campo_directo(fecha_entry, edit_window)).grid(row=1, column=2, padx=2)
-
         ttk.Label(frame, text="Código:").grid(row=1, column=0, sticky=tk.W, pady=2)
         codigo_entry = ttk.Entry(frame)
         codigo_entry.grid(row=1, column=1, sticky="we", pady=2)
@@ -485,7 +474,6 @@ class TkinterApp:
             # Obtener los valores actuales de los campos
             valores = [
                 id_entry.get(),
-                fecha_entry.get(),
                 codigo_entry.get(),
                 nombre_entry.get(),
                 direccion_entry.get(),
