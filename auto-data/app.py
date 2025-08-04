@@ -1,5 +1,8 @@
 import tkinter as tk
-from tkinter import ttk, messagebox, scrolledtext
+from tkinter import scrolledtext
+import ttkbootstrap as ttk
+from ttkbootstrap.constants import *
+from ttkbootstrap.dialogs import Messagebox
 from datetime import datetime
 from dato import Dato
 from db_manager import DatabaseManager
@@ -9,8 +12,14 @@ from data_manager import DataManager
 class TkinterApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("Gestión de Datos - Tkinter")
+        self.root.title("🚀 Gestión de Datos")
         self.root.geometry("1200x800")
+        
+        # Configurar el ícono de la aplicación
+        try:
+            self.root.iconbitmap('icon.ico')  # Asegúrate de tener un archivo icon.ico en el directorio
+        except:
+            pass  # Si no hay ícono, continuar sin él
         
         # Inicializar componentes
         self.db_manager = DatabaseManager()
@@ -25,15 +34,24 @@ class TkinterApp:
     
     def setup_ui(self):
         """Configurar la interfaz de usuario"""
-        # Frame principal
-        main_frame = ttk.Frame(self.root, padding="10")
+        # Frame principal con estilo
+        style = ttk.Style()
+        style.configure('TFrame', background='#2b3e50')
+        
+        main_frame = ttk.Frame(self.root, padding="15")
         main_frame.grid(row=0, column=0, sticky="nsew")
+        main_frame.configure(style='TFrame')
         
         # Configurar grid
         self.root.columnconfigure(0, weight=1)
-        # Frame izquierdo - Formulario
-        form_frame = ttk.LabelFrame(main_frame, text="Formulario de Datos", padding="10")
-        form_frame.grid(row=1, column=0, sticky="nsew", padx=(0, 10))
+        # Frame izquierdo - Formulario con estilo
+        form_frame = ttk.LabelFrame(
+            main_frame, 
+            text="📝 Formulario de Datos", 
+            padding="15",
+            bootstyle="info"
+        )
+        form_frame.grid(row=1, column=0, sticky="nsew", padx=(0, 10), pady=(0, 10))
         
         # ...existing code...
         
@@ -51,84 +69,199 @@ class TkinterApp:
         ttk.Radiobutton(codigo_frame, text="Termina en 5", variable=self.modo_codigo, 
                        value='5').pack(side=tk.LEFT)
         
-        # Botones del formulario
+        # Botones del formulario con estilos
         button_frame = ttk.Frame(form_frame)
-        button_frame.grid(row=3, column=0, columnspan=2, pady=10)
+        button_frame.grid(row=3, column=0, columnspan=2, pady=(15, 5))
         
-        ttk.Button(button_frame, text="Guardar Datos", 
-                  command=self.guardar_datos).pack(side=tk.LEFT, padx=(0, 10))
-        # ...existing code...
-        ttk.Button(button_frame, text="Limpiar Formulario", 
-                  command=self.limpiar_formulario).pack(side=tk.LEFT)
+        ttk.Button(
+            button_frame, 
+            text="💾 Guardar Datos", 
+            command=self.guardar_datos,
+            bootstyle="primary",
+            width=18
+        ).pack(side=tk.LEFT, padx=(0, 10))
         
-        # Frame derecho - Direcciones
-        dir_frame = ttk.LabelFrame(main_frame, text="Gestión de Direcciones", padding="10")
-        dir_frame.grid(row=1, column=1, sticky="nsew", padx=(10, 0))
+        ttk.Button(
+            button_frame, 
+            text="🧹 Limpiar Formulario", 
+            command=self.limpiar_formulario,
+            bootstyle="secondary",
+            width=18
+        ).pack(side=tk.LEFT)
+        
+        # Frame derecho - Direcciones con estilo
+        dir_frame = ttk.LabelFrame(
+            main_frame, 
+            text="📍 Gestión de Direcciones", 
+            padding="15",
+            bootstyle="success"
+        )
+        dir_frame.grid(row=1, column=1, sticky="nsew", padx=(10, 0), pady=(0, 10))
         
         ttk.Label(dir_frame, text="Nuevas direcciones:").grid(row=0, column=0, sticky=tk.W)
         self.direcciones_text = scrolledtext.ScrolledText(dir_frame, width=30, height=5)
         self.direcciones_text.grid(row=1, column=0, sticky="we", pady=5)
         
-        ttk.Button(dir_frame, text="Agregar Direcciones", 
-                  command=self.agregar_direcciones).grid(row=2, column=0, pady=5)
+        ttk.Button(
+            dir_frame, 
+            text="➕ Agregar Direcciones", 
+            command=self.agregar_direcciones,
+            bootstyle="success",
+            width=20
+        ).grid(row=2, column=0, pady=(10, 5))
         
         # Contador de direcciones
         self.contador_label = ttk.Label(dir_frame, text="Direcciones disponibles: 0")
         self.contador_label.grid(row=3, column=0, pady=5)
         
-        # Frame inferior - Tabla de datos
-        table_frame = ttk.LabelFrame(main_frame, text="Datos Registrados", padding="10")
-        table_frame.grid(row=2, column=0, columnspan=2, sticky="nsew", pady=(10, 0))
+        # Frame inferior - Tabla de datos con estilo
+        table_frame = ttk.LabelFrame(
+            main_frame, 
+            text="📋 Datos Registrados", 
+            padding="15",
+            bootstyle="primary"
+        )
+        table_frame.grid(row=2, column=0, columnspan=2, sticky="nsew")
         
-        # Crear Treeview para la tabla
+        # Crear Treeview para la tabla con estilo
+        style = ttk.Style()
+        style.configure("Treeview", 
+                      font=('Helvetica', 9),
+                      rowheight=25,
+                      fieldbackground="#2b3e50")
+        style.configure("Treeview.Heading", 
+                      font=('Helvetica', 10, 'bold'),
+                      background='#4e5d6c',
+                      foreground='white')
+        style.map('Treeview', 
+                background=[('selected', '#4e5d6c')],
+                foreground=[('selected', 'white')])
+        
         columns = ('ID', 'Código', 'Nombre', 'Dirección', 'ZIP4', 
                   'Amount Current Any', 'Amount Current Regular', 'Amount PAS Any', 'Amount PAS Regular')
         
-        self.tree = ttk.Treeview(table_frame, columns=columns, show='headings', height=15)
+        self.tree = ttk.Treeview(
+            table_frame, 
+            columns=columns, 
+            show='headings', 
+            height=15,
+            bootstyle="secondary",
+            selectmode='extended'  # Permite selección múltiple
+        )
         
-        # Configurar columnas
+        # Configurar columnas con anchos personalizados
+        column_widths = {
+            'ID': 40,
+            'Código': 80,
+            'Nombre': 120,
+            'Dirección': 180,
+            'ZIP4': 70,
+            'Amount Current Any': 100,
+            'Amount Current Regular': 100,
+            'Amount PAS Any': 100,
+            'Amount PAS Regular': 100
+        }
+        
         for col in columns:
-            self.tree.heading(col, text=col)
-            self.tree.column(col, width=100, minwidth=80)
+            self.tree.heading(col, text=col, anchor=tk.CENTER)
+            self.tree.column(col, width=column_widths.get(col, 100), minwidth=50, anchor=tk.CENTER)
+            
+        # Ajustar el ancho de las columnas automáticamente
+        for col in columns:
+            self.tree.column(col, stretch=tk.YES if col in ['Nombre', 'Dirección'] else tk.NO)
         
-        # Scrollbar para la tabla
-        scrollbar = ttk.Scrollbar(table_frame, orient=tk.VERTICAL, command=self.tree.yview)
+        # Scrollbar para la tabla con estilo
+        scrollbar = ttk.Scrollbar(
+            table_frame, 
+            orient=tk.VERTICAL, 
+            command=self.tree.yview,
+            bootstyle="round"
+        )
         self.tree.configure(yscrollcommand=scrollbar.set)
         
+        # Configurar grid para la tabla y scrollbar
         self.tree.grid(row=0, column=0, sticky="nsew")
         scrollbar.grid(row=0, column=1, sticky="ns")
         
-        # Botones de la tabla
+        # Configurar el peso de la fila de la tabla para que ocupe el espacio disponible
+        table_frame.grid_rowconfigure(0, weight=1)
+        table_frame.grid_columnconfigure(0, weight=1)
+        
+        # Botones de la tabla con estilos
         table_button_frame = ttk.Frame(table_frame)
-        table_button_frame.grid(row=1, column=0, columnspan=2, pady=10)
+        table_button_frame.grid(row=1, column=0, columnspan=2, pady=(15, 5))
         
-        ttk.Button(table_button_frame, text="Editar Seleccionado", 
-                  command=self.editar_dato).pack(side=tk.LEFT, padx=(0, 10))
-        ttk.Button(table_button_frame, text="Eliminar Seleccionado", 
-                  command=self.eliminar_dato).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(
+            table_button_frame, 
+            text="✏️ Editar Seleccionado", 
+            command=self.editar_dato,
+            bootstyle="info",
+            width=20
+        ).pack(side=tk.LEFT, padx=(0, 10))
         
-        # Botón para eliminar el primer dato
-        ttk.Button(table_button_frame, text="⏮️ Borrar Primero", 
-                  command=self.eliminar_primer_dato).pack(side=tk.LEFT, padx=(0, 10))
+        ttk.Button(
+            table_button_frame, 
+            text="❌ Eliminar Seleccionado", 
+            command=self.eliminar_dato,
+            bootstyle="danger",
+            width=20
+        ).pack(side=tk.LEFT, padx=(0, 10))
         
-        # Botón para eliminar todos los datos (con estilo de advertencia)
-        ttk.Button(table_button_frame, text="🗑️ Borrar Todos los Datos", 
-                  command=self.eliminar_todos_datos, 
-                  style="Danger.TButton").pack(side=tk.LEFT, padx=(10, 0))
+        ttk.Button(
+            table_button_frame, 
+            text="⏮️ Borrar Primero", 
+            command=self.eliminar_primer_dato,
+            bootstyle="warning",
+            width=18
+        ).pack(side=tk.LEFT, padx=(0, 10))
         
-        # Botón para resetear IDs y borrar todos los datos
-        ttk.Button(table_button_frame, text="🔄 Resetear IDs (empezar en 101)", 
-                  command=self.resetear_ids_y_datos, style="Danger.TButton").pack(side=tk.LEFT, padx=(10, 0))
+        ttk.Button(
+            table_button_frame, 
+            text="🗑️ Borrar Todo", 
+            command=self.eliminar_todos_datos,
+            bootstyle="danger-outline",
+            width=18
+        ).pack(side=tk.LEFT, padx=(0, 10))
         
-        # Configurar grid weights
+        ttk.Button(
+            table_button_frame, 
+            text="🔄 Resetear IDs", 
+            command=self.resetear_ids_y_datos,
+            bootstyle="danger-outline",
+            width=18
+        ).pack(side=tk.LEFT)
+        
+        # Configurar grid weights para un diseño responsivo
+        self.root.grid_rowconfigure(0, weight=1)
+        self.root.grid_columnconfigure(0, weight=1)
+        
+        main_frame.grid_rowconfigure(2, weight=1)  # Fila de la tabla
+        main_frame.grid_columnconfigure(0, weight=1)
+        main_frame.grid_columnconfigure(1, weight=1)
+        
         table_frame.columnconfigure(0, weight=1)
         table_frame.rowconfigure(0, weight=1)
         dir_frame.columnconfigure(0, weight=1)
         form_frame.columnconfigure(1, weight=1)
         
+        # Configurar el tema oscuro para los widgets de entrada
+        style.configure('TEntry', fieldbackground='#4e5d6c', foreground='white')
+        style.configure('TCombobox', fieldbackground='#4e5d6c', foreground='black')
+        style.configure('TButton', font=('Helvetica', 10))
+        
         # Configurar estilos
         style = ttk.Style()
-        style.configure("Danger.TButton", font=("Arial", 10, "bold"), padding=8)
+        style.configure("primary.TButton", font=('Helvetica', 10))
+        style.configure("success.TButton", font=('Helvetica', 10))
+        style.configure("info.TButton", font=('Helvetica', 10))
+        style.configure("warning.TButton", font=('Helvetica', 10))
+        style.configure("danger.TButton", font=('Helvetica', 10, 'bold'))
+        
+        # Configurar tema oscuro
+        self.style = ttk.Style(theme='darkly')
+        
+        # Configurar fuente general
+        self.style.configure('.', font=('Helvetica', 10))
         
         # ...existing code...
     
