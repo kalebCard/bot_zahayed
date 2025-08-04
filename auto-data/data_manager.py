@@ -45,23 +45,23 @@ class DataManager:
         return f"{numeros} {calle}"
     
     def generar_codigo_aleatorio(self, modo: str = 'random') -> str:
-        """Generar código aleatorio"""
-        letras = string.ascii_uppercase
-        digitos = string.digits
+        """
+        Genera un código aleatorio en formato compacto.
+        Formato: 2D 2L 3D 1L 4D 1D  (D=dígito, L=letra)
+        Ejemplo: '12AB345C67890' o '34XY789Z12345' si modo='5'
+        """
+        def rc(chars, n):  # Función auxiliar más corta
+            return ''.join(random.choices(chars, k=n))
+            
+        # Generar las partes del código de manera más eficiente
+        p1 = rc(string.digits, 2)     # 2 dígitos
+        p2 = rc(string.ascii_uppercase, 2)  # 2 letras
+        p3 = rc(string.digits, 3)     # 3 dígitos
+        p4 = rc(string.ascii_uppercase, 1)  # 1 letra
+        p5 = rc(string.digits, 4)     # 4 dígitos
+        p6 = '5' if modo == '5' else rc(string.digits, 1)  # 1 dígito o '5'
         
-        def rand_chars(chars, n):
-            return ''.join(random.choice(chars) for _ in range(n))
-        
-        codigo = (rand_chars(digitos, 2) + rand_chars(letras, 2) + 
-                 rand_chars(digitos, 3) + rand_chars(letras, 1) + 
-                 rand_chars(digitos, 4))
-        
-        if modo == '5':
-            codigo += '5'
-        else:
-            codigo += rand_chars(digitos, 1)
-        
-        return codigo
+        return f"{p1}{p2}{p3}{p4}{p5}{p6}"
     
     def generar_numero_decimal(self) -> str:
         """Generar número decimal entre 10.00 y 99.99, siempre con dos decimales"""
